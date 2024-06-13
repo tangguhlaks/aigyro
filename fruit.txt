@@ -1,0 +1,38 @@
+@app.route("/fruit-predict")
+def fruit_predict():
+    # Data training
+    X_train = np.array([
+        [1, 2, 1],  # Anggur: warna=1, bentuk=2, ukuran=1
+        [2, 1, 2],  # Anggur: warna=2, bentuk=1, ukuran=2
+        [2, 2, 1],  # Anggur: warna=2, bentuk=2, ukuran=1
+        [1, 1, 2],  # Anggur: warna=1, bentuk=1, ukuran=2
+        [2, 1, 1],  # Anggur: warna=2, bentuk=1, ukuran=1
+        [1, 2, 2],  # Anggur: warna=1, bentuk=2, ukuran=2
+        [2, 2, 2],  # Semangka: warna=2, bentuk=2, ukuran=2
+        [3, 2, 2],  # Semangka: warna=3, bentuk=2, ukuran=2
+        [3, 2, 3],  # Semangka: warna=3, bentuk=2, ukuran=3
+        [2, 2, 3],  # Semangka: warna=2, bentuk=2, ukuran=3
+    ])
+
+    y_train = np.array(['Anggur', 'Anggur', 'Anggur', 'Anggur', 'Anggur',
+                        'Anggur', 'Semangka', 'Semangka', 'Semangka', 'Semangka'])
+
+    # Initialize model
+    fruit_model = GaussianNB()
+
+    # Train model
+    fruit_model.fit(X_train, y_train)
+
+    # Test data
+    X_test = np.array([
+        [2, 1, 1],  # Test fruit example
+        [3, 2, 2]   # Test fruit example
+    ])
+
+    # Make predictions
+    predictions = fruit_model.predict(X_test)
+
+    # Format prediction results
+    result = [{"data_uji": X_test[i].tolist(), "prediksi": predictions[i]} for i in range(len(predictions))]
+
+    return jsonify(result)
