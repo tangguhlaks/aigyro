@@ -10,11 +10,12 @@ app = Flask(__name__)
 
 # Load CSV files for sit, stand, and walk
 walk = pd.read_csv('training/walk.csv')
+fall = pd.read_csv('training/fall.csv')
 sit = pd.read_csv('training/sit.csv')
 stand = pd.read_csv('training/stand.csv')
 
 # Combine the datasets for walk, stand, and sit
-gyro_data = pd.concat([stand, sit, walk], ignore_index=True)
+gyro_data = pd.concat([stand, sit, walk,fall], ignore_index=True)
 print(gyro_data)
 
 # Preprocess data
